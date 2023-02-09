@@ -1,0 +1,35 @@
+.list-item {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  height: 130px;
+  width: 100px;
+  margin: 10px;
+}
+.img {
+  width: 60px;
+  border-radius: 8px;
+}
+.app_name {
+  color: #1e293b;
+  font-size: 16px;
+  font-family: 'Bree Serif';
+  text-align: center;
+}
+@media screen and (max-width: 767px) {
+  .list-item {
+    height: 100px;
+    width: 80px;
+    margin: 5px;
+  }
+  .img {
+    width: 40px;
+  }
+  .app_name {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+}

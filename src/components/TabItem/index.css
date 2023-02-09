@@ -1,0 +1,19 @@
+.tab-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tab {
+  color: #7b8794;
+  background-color: transparent;
+  margin: 2px;
+  font-family: 'Roboto';
+  border: none;
+  cursor: pointer;
+}
+.active-tab {
+  border-bottom: solid 2px #2563eb;
+}
+.inactive-tab {
+  border-bottom: solid 2px #dfe2e5;
+}
