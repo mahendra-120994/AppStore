@@ -296,53 +296,39 @@ class AppStore extends Component {
   state = {
     activeTab: tabsList[0].tabId,
     searchItem: '',
-    isTabClicked: true,
-    isSearchClicked: false,
   }
 
   clickTabItem = tabId => {
-    this.setState({
-      activeTab: tabId,
-      isTabClicked: true,
-      isSearchClicked: false,
-    })
+    this.setState({activeTab: tabId})
   }
 
   onSearch = event => {
-    this.setState({
-      searchItem: event.target.value,
-      isTabClicked: false,
-      isSearchClicked: true,
-    })
+    this.setState({searchItem: event.target.value})
   }
 
-  getFilteredApps = () => {
+  getFilteredApps = searchResult => {
     const {activeTab} = this.state
-    const filteredItem = appsList.filter(
-      eachApp => eachApp.category === activeTab,
+    const filteredApps = searchResult.filter(
+      eachSearchedApp => eachSearchedApp.category === activeTab,
     )
 
-    return filteredItem
+    return filteredApps
   }
 
   getSearchedApps = () => {
     const {searchItem} = this.state
-    const filteredItem = appsList.filter(eachApp =>
+    const searchResult = appsList.filter(eachApp =>
       eachApp.appName.toLowerCase().includes(searchItem.toLowerCase()),
     )
-    return filteredItem
+
+    return searchResult
   }
 
   render() {
-    const {activeTab, searchItem, isTabClicked, isSearchClicked} = this.state
+    const {activeTab, searchItem} = this.state
+    const searchResult = this.getSearchedApps()
+    const filteredResult = this.getFilteredApps(searchResult)
 
-    let filteredItem = null
-
-    if (isTabClicked) {
-      filteredItem = this.getFilteredApps()
-    } else if (isSearchClicked) {
-      filteredItem = this.getSearchedApps()
-    }
     return (
       <div className="bg_container">
         <div className="app_container">
@@ -362,20 +348,22 @@ class AppStore extends Component {
             />
           </div>
           <ul className="tab-box">
-            {tabsList.map(tabDetail => (
+            {tabsList.map(tabDetails => (
               <TabItem
-                tabDetail={tabDetail}
-                key={tabDetail.tabId}
+                tabDetails={tabDetails}
+                key={tabDetails.tabId}
                 clickTabItem={this.clickTabItem}
-                isActive={activeTab === tabDetail.tabId}
+                isActive={activeTab === tabDetails.tabId}
               />
             ))}
           </ul>
-          <ul className="app-box">
-            {filteredItem.map(appDetail => (
-              <AppItem appDetail={appDetail} key={appDetail.appId} />
-            ))}
-          </ul>
+          <div>
+            <ul className="app-box">
+              {filteredResult.map(appDetails => (
+                <AppItem appDetails={appDetails} key={appDetails.appId} />
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     )
